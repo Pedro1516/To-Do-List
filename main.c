@@ -3,9 +3,9 @@
 #include <stdlib.h>
 
 #ifdef _WIN32 || _WIN64
-#include <Windows.h>
+   #include <Windows.h>
 #else
-#include <unistd.h>
+   #include <unistd.h>
 #endif
 
 void limpar();
