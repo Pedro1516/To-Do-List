@@ -8,76 +8,11 @@
 #include <unistd.h>
 #endif
 
-void limpar()
-{
-#ifdef _WIN32 || _WIN64
-	system("cls");
-#else
-	system("clear");
-#endif
-}
-
-void esperar(time)
-{
-#ifdef _WIN32 || _WIN64
-	Sleep(time);
-#else
-	sleep(time);
-#endif
-}
-
-void mostrar_lista(int tamanho, char lista[10][30])
-{
-	printf("\n");
-	for (int i = 0; i < tamanho; i++)
-	{
-		if (lista[i][0] == '\0')
-		{
-			break;
-		}
-		printf("%d • %s\n", i, lista[i]);
-	}
-	printf("\n");
-}
-
-void apagar_item(int pos, int size, char lista[10][30])
-{
-	//apaga item da lista
-	for (int i = 0; i < 30; i++)
-	{
-		lista[pos][i] = '\0';
-	}
-	//sobe os itens de posição, subtrai o índice em 1
-	for (int i = 0; i < size; i++)
-	{
-		if (lista[pos + i][0] == '\0' && pos + i != pos)
-		{
-			break;
-		}
-
-		strcpy(lista[pos + i], lista[pos + i + 1]);
-	}
-}
-
-void add_item(int size, char lista[10][30])
-{
-	char aux[30];
-	getchar();
-	fgets(aux, 30, stdin);
-	if (aux[strlen(aux) - 1] == '\n')
-	{
-		aux[strlen(aux) - 1] = '\0';
-	}
-	//scanf("%s", aux);
-	for (int i = 0; i < size; i++)
-	{
-		if (lista[i][0] == '\0')
-		{
-			strcpy(lista[i], aux);
-			break;
-		}
-	}
-}
+void limpar();
+void esperar(int time);
+void mostrar_lista(int tamanho, char lista[10][30]);
+void apagar_item(int pos, int size, char lista[10][30]);
+void add_item(int size, char lista[10][30]);
 
 int main(void)
 {
@@ -113,19 +48,84 @@ int main(void)
 			limpar();
 			mostrar_lista(size, p);
 			break;
-		
+
 		case 3:
 			return 0;
 			break;
-		
+
 		default:
 			printf("\nOpção Invalida\n\n");
 			esperar(1);
 			limpar();
 			break;
 		}
-		
 	}
 
 	return 0;
+}
+
+void limpar()
+{
+#ifdef _WIN32 || _WIN64
+	system("cls");
+#else
+	system("clear");
+#endif
+}
+
+void esperar(int time)
+{
+#ifdef _WIN32 || _WIN64
+	Sleep(time);
+#else
+	sleep(time);
+#endif
+}
+
+void mostrar_lista(int tamanho, char lista[10][30])
+{
+	printf("\n");
+	for (int i = 0; i < tamanho; i++)
+	{
+		if (lista[i][0] == '\0')
+		{
+			break;
+		}
+		printf("%d • %s\n", i, lista[i]);
+	}
+	printf("\n");
+}
+
+void apagar_item(int pos, int size, char lista[10][30])
+{
+	//sobe os itens de posição, subtrai o índice em 1
+	for (int i = 0; i < size; i++)
+	{
+		if (lista[pos + i][0] == '\0' && pos + i != pos)
+		{
+			break;
+		}
+
+		strcpy(lista[pos + i], lista[pos + i + 1]);
+	}
+}
+
+void add_item(int size, char lista[10][30])
+{
+	char aux[30];
+	getchar();
+	fgets(aux, 30, stdin);
+	if (aux[strlen(aux) - 1] == '\n')
+	{
+		aux[strlen(aux) - 1] = '\0';
+	}
+	//scanf("%s", aux);
+	for (int i = 0; i < size; i++)
+	{
+		if (lista[i][0] == '\0')
+		{
+			strcpy(lista[i], aux);
+			break;
+		}
+	}
 }
