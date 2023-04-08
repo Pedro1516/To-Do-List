@@ -13,18 +13,39 @@ void esperar(int time);
 void mostrar_lista(int tamanho, char lista[10][30]);
 void apagar_item(int pos, int size, char lista[10][30]);
 void add_item(int size, char lista[10][30]);
+int eNumero(char *str);
 
 int main(void)
 {
-	int size, i, item_apagar, escolha_menu;
+	int size, i, j, item_apagar, escolha_menu;
 	char p[10][30] = {"Bye Bye", "Hello World", "Teste"};
 	size = sizeof(p) / sizeof(p[0]);
 	i = 1;
+	j = 1;
 
 	while (i)
 	{
-		printf("Adicionar Item a Lista[0] \nRemover Item da Lista[1] \nVer Lista[2] \nSair do Programa [3]\n");
-		scanf("%d", &escolha_menu);
+		while (j)
+		{
+			printf("Adicionar Item a Lista[0] \nRemover Item da Lista[1] \nVer Lista[2] \nSair do Programa [3]\n");
+			char aux[6];
+			fgets(aux, 6, stdin);
+			if (aux[strlen(aux) - 1] == '\n')
+			{
+				aux[strlen(aux) - 1] = '\0';
+			}
+
+			if (eNumero(aux))
+			{
+				escolha_menu = atoi(aux);
+				break;
+			}
+			limpar();
+		}
+
+		//printf("%d\n", atoi(escolha_menu));
+
+		//scanf("%d", &escolha_menu);
 
 		switch (escolha_menu)
 		{
@@ -42,6 +63,7 @@ int main(void)
 			scanf("%d", &item_apagar);
 			apagar_item(item_apagar, size, p);
 			limpar();
+			getchar();
 			break;
 
 		case 2:
@@ -113,7 +135,6 @@ void apagar_item(int pos, int size, char lista[10][30])
 void add_item(int size, char lista[10][30])
 {
 	char aux[30];
-	getchar();
 	fgets(aux, 30, stdin);
 	if (aux[strlen(aux) - 1] == '\n')
 	{
@@ -128,4 +149,11 @@ void add_item(int size, char lista[10][30])
 			break;
 		}
 	}
+}
+
+int eNumero(char *str)
+{
+	char *stop = 0;
+	strtoul(str, &stop, 10);
+	return (stop - str == strlen(str));
 }
